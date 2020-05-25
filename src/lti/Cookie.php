@@ -24,6 +24,18 @@ class Cookie {
             'secure' => true
         ];
 
+        if (PHP_VERSION_ID < 70300) {
+            $options += [
+                'path' => "/",
+                'domain' => "",
+                'secure' => false,
+                'httponly' => false
+            ];
+            extract(array_merge($cookie_options, $options)); // => $expires, $path, $domain, $secure, $httponly
+            setcookie("LEGACY_" . $name, $value, $expires, $path, $domain, $secure, $httponly);
+            return $this;
+        }
+
         setcookie($name, $value, array_merge($cookie_options, $same_site_options, $options));
 
         // Set a second fallback cookie in the event that "SameSite" is not supported
