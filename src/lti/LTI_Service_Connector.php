@@ -74,7 +74,9 @@ class LTI_Service_Connector {
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $response = curl_exec($ch);
         if (curl_errno($ch)){
-            echo 'Request Error:' . curl_error($ch);
+            return [
+                'error' => 'Request Error:' . curl_error($ch)
+            ];
         }
         $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
         curl_close ($ch);
