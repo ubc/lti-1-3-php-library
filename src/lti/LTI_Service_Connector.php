@@ -75,7 +75,7 @@ class LTI_Service_Connector {
         $response = curl_exec($ch);
         if (curl_errno($ch)){
             return [
-                'error' => 'Request Error:' . curl_error($ch)
+                'error' => 'Request Error: ' . curl_error($ch)
             ];
         }
         $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
