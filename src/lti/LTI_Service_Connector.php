@@ -2,6 +2,7 @@
 namespace IMSGlobal\LTI;
 
 use Firebase\JWT\JWT;
+use IMSGlobal\LTI\LTI_Exception;
 
 class LTI_Service_Connector {
     private $registration;
@@ -73,10 +74,9 @@ class LTI_Service_Connector {
         }
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $response = curl_exec($ch);
-        if (curl_errno($ch)){
-            return [
-                'error' => 'Request Error: ' . curl_error($ch)
-            ];
+        if (curl_errno($ch)) {
+            throw new LTI_Exception('Request Error: ' . curl_error($ch));
+            return;
         }
         $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
         curl_close ($ch);
