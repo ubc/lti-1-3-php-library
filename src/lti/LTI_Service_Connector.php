@@ -78,6 +78,13 @@ class LTI_Service_Connector {
             throw new LTI_Exception('Request Error: ' . curl_error($ch));
             return;
         }
+
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        if (intval($http_code) >= 400) {
+            throw new LTI_Exception(sprintf("HTTP Error Code: %s", $http_code));
+            return;
+        }
+
         $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
         curl_close ($ch);
 
