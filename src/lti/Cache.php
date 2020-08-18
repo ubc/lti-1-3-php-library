@@ -3,7 +3,7 @@ namespace IMSGlobal\LTI;
 
 class Cache {
 
-    private $cache;
+    protected $cache;
 
     public function get_launch_data($key) {
         $this->load_cache();
@@ -30,7 +30,7 @@ class Cache {
         return true;
     }
 
-    private function load_cache() {
+    protected function load_cache() {
         $cache = file_get_contents(sys_get_temp_dir() . '/lti_cache.txt');
         if (empty($cache)) {
             file_put_contents(sys_get_temp_dir() . '/lti_cache.txt', '{}');
@@ -39,7 +39,7 @@ class Cache {
         $this->cache = json_decode($cache, true);
     }
 
-    private function save_cache() {
+    protected function save_cache() {
         file_put_contents(sys_get_temp_dir() . '/lti_cache.txt', json_encode($this->cache));
     }
 }
